@@ -35,7 +35,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const response = await axios.post(`${API_BASE_URL}Driver/get-profile`, {
-        DriverId: 1//driver.deliveryPersonId, // Replace with the actual driver ID dynamically
+        DriverId: driver.deliveryPersonId//driver.deliveryPersonId, // Replace with the actual driver ID dynamically
       });
     //   console.log(response.data);
       
