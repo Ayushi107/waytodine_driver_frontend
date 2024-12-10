@@ -5,7 +5,7 @@ import './css/Button.css';
 import logoImage from '../images/logo.jpg';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL,REACT_APP_GOOGLE_MAPS_API_KEY } from './Apiconfig';
+import { API_BASE_URL, REACT_APP_GOOGLE_MAPS_API_KEY } from './Apiconfig';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -14,6 +14,11 @@ const Register = () => {
     const [bankAccountNumber, setBankAccountNumber] = useState('');
     const [vehicleType, setVehicleType] = useState('');
     const [vehicleNumber, setVehicleNumber] = useState('');
+    const [licensedoc, setLicensedoc] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+
     const [error, setError] = useState(null);
 
     const handleRegisterClick = async () => {
@@ -23,20 +28,28 @@ const Register = () => {
             bankAccountNumber,
             vehicleType,
             vehicleNumber,
+            email,
+            phone,
+            password,
+            licensedoc
         });
 
         try {
-            const response = await axios.post(`${API_BASE_URL}Driver/register`, {
-                driverName,
-                licenseNumber,
+            const response = await axios.post(`${API_BASE_URL}Driver/register-driver`, {
+                DriverName: driverName,
+                DrivingLicenseNumber: licenseNumber,
                 bankAccountNumber,
-                vehicleType,
-                vehicleNumber,
+                VehicleType: vehicleType,
+                VehicleNumber: vehicleNumber,
+                LicenseDocument: licensedoc,
+                DriverEmail: email,
+                Phone: phone,
+                Password: password
             });
 
-            if (response.data.success) {
+            if (response.data) {
                 alert('Driver registered successfully');
-                navigate('/dashboard'); // Redirect to dashboard after successful registration
+                navigate('/'); // Redirect to dashboard after successful registration
             } else {
                 setError('Failed to register driver. Please try again.');
             }
@@ -58,7 +71,7 @@ const Register = () => {
                 </div>
                 <Form onSubmit={(e) => e.preventDefault()}>
                     {error && <p className="text-danger">{error}</p>}
-                    
+
                     {/* Driver Name */}
                     <FormGroup className="mb-3">
                         <Label for="driverName">
@@ -72,7 +85,7 @@ const Register = () => {
                             placeholder="Enter driver name"
                         />
                     </FormGroup>
-                    
+
                     {/* License Number */}
                     <FormGroup className="mb-3">
                         <Label for="licenseNumber">
@@ -84,6 +97,55 @@ const Register = () => {
                             value={licenseNumber}
                             onChange={(e) => setLicenseNumber(e.target.value)}
                             placeholder="Enter license number"
+                        />
+                    </FormGroup>
+                    <FormGroup className="mb-3">
+                        <Label for="licenseNumber">
+                            License Document <span className="text-danger">*</span>
+                        </Label>
+                        <Input
+                            type="text"
+                            id="licenseNumber"
+                            value={licensedoc}
+                            onChange={(e) => setLicensedoc(e.target.value)}
+                            placeholder="Enter license Document"
+                        />
+                    </FormGroup>
+                    <FormGroup className="mb-3">
+                        <Label for="licenseNumber">
+                            Phone Number <span className="text-danger">*</span>
+                        </Label>
+                        <Input
+                            type="text"
+                            id="licenseNumber"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="Enter Phone number"
+                        />
+                    </FormGroup>
+                    <FormGroup className="mb-3">
+                        <Label for="licenseNumber">
+                            Email <span className="text-danger">*</span>
+                        </Label>
+                        <Input
+                            type="text"
+                            id="licenseNumber"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter Emailr"
+                        />
+                    </FormGroup>
+
+                    <FormGroup className="mb-3">
+                        <Label for="licenseNumber">
+                            Password <span className="text-danger">*</span>
+                        </Label>
+                        <Input
+                            type="text"
+                            id="licenseNumber"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter Password"
                         />
                     </FormGroup>
 
